@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=visualization"></script>
 <script src="crime_2012_december.json" ></script>
+<script src="boston2015ToPresentCrime100k.json" ></script>
 
+
+<div>
+    <input type="checkbox" id="chicagodata" checked/>
+    <label for="chicagodata">Chicago Crime Data</label>
+    <input type="checkbox" id="bostondata" />
+    <label for="bostondata">Boston Crime Data</label>
+</div>
+<br/>
+<input type="button" value="Plot Crime Data" onclick= "plotCrimePoints()" />
+<input type="button" value="Clear Map"  onclick= "clearMap()" />
+<br/>
 <div id="map-canvas" style="height:600px;width:800px"></div>
 
 <script type="text/javascript">
-
-function point(crime){
-    var point = {};
     
-    point.latitude = crime[29][1];//crime[?];
-    point.longitude = crime[29][2];//crime[?];
-    
-    return point;
-}
-
-var points = chicago.data.map(point);
+    function point(crime){
+        var point = {};
+        
+        if(crime.Long == null)
+        {
+            point.latitude = crime[29][1];
+            point.longitude = crime[29][2];
+        }
+        else{
+            point.latitude = crime.Lat;
+            point.longitude = crime.Long;
+        }
+        
+        return point;
+    }
 
 </script>
 <script src="heatmap.js"></script>
